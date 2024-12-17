@@ -12,7 +12,8 @@ class GeneroController extends Controller
      */
     public function index()
     {
-        //
+        $generos = Genero::all();
+       return view('generos/index',compact('generos'));
     }
 
     /**
@@ -44,7 +45,7 @@ class GeneroController extends Controller
      */
     public function edit(Genero $genero)
     {
-        //
+        return "teste";
     }
 
     /**
