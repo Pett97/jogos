@@ -11,10 +11,11 @@ Route::get('/', function () {
 
 //genero
 Route::group([
-    'prefix' => 'generos', 
-    'as' => 'generos.'       
+    'prefix' => 'generos',
+    'as' => 'generos.'
 ], function () {
-  
+
     Route::get('lista', [GeneroController::class, 'index'])->name('index');
     Route::get('{genero}/edit', [GeneroController::class, 'edit'])->name('edit');
+    Route::put('{genero}', [GeneroController::class, 'update'])->name('update');
 });

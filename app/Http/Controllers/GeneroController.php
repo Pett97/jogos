@@ -13,7 +13,7 @@ class GeneroController extends Controller
     public function index()
     {
         $generos = Genero::all();
-       return view('generos/index',compact('generos'));
+        return view('generos/index', compact('generos'));
     }
 
     /**
@@ -35,17 +35,20 @@ class GeneroController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Genero $genero)
+    public function show($id)
     {
-        //
+        //$genero = Genero::findOrFail($id);
+
+        //return view('generos/show',compact('genero'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Genero $genero)
+    public function edit($id)
     {
-        return "teste";
+        $genero = Genero::findOrFail($id);
+        return view('generos/edit', compact('genero'));
     }
 
     /**
@@ -53,7 +56,15 @@ class GeneroController extends Controller
      */
     public function update(Request $request, Genero $genero)
     {
-        //
+        $novoNome = $request->input('genero.novoNome');
+        if (empty($novoNome)) {
+
+            return redirect()->back();
+        }
+        $genero->setNome($novoNome);
+        $genero->save();
+
+        return redirect()->route('generos.index');
     }
 
     /**

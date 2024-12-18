@@ -3,7 +3,7 @@
   <header>
   <nav>
     <div class="nav-wrapper lime darken-1">
-      <a class="brand-logo center">Generos</a>
+      <a class="brand-logo center">Generos De Jogos</a>
     </div>
   </nav>
   </header>
