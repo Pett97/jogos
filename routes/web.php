@@ -20,4 +20,5 @@ Route::group([
     Route::put('{genero}', [GeneroController::class, 'update'])->name('update');
     Route::get('criar',[GeneroController::class,'create'])->name('create');
     Route::post('salvar',[GeneroController::class,'store'])->name('salvar');
+    Route::delete('{genero}',[GeneroController::class,'destroy'])->name('deletar');
 });

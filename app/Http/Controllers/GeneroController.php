@@ -29,7 +29,7 @@ class GeneroController extends Controller
      */
     public function store(Request $request)
     {
-        Genero::create(['nome'=>$request->input('genero_nome')]);
+        Genero::create(['nome' => $request->input('genero_nome')]);
 
         return redirect()->route('generos.index');
     }
@@ -72,8 +72,11 @@ class GeneroController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genero $genero)
+    public function destroy($id)
     {
-        //
+        $genero = Genero::findOrFail($id);
+
+        $genero->delete();
+        return redirect()->route('generos.index');
     }
 }

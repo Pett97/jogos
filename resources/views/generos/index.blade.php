@@ -26,8 +26,14 @@
       <td>{{$genero->getId()}}</td>
       <td>{{$genero->getNome()}}</td>
       <td>
-        <a href="{{route('generos.edit',$genero->getId())}}"><i class=" tiny material-icons">edit</i></a>
-        <a href=""><i class=" tiny material-icons">delete</i></a>
+        <a class="waves-effect waves-light btn blue" href="{{route('generos.edit',$genero->getId())}}"><i class=" tiny material-icons">edit</i></a>
+        <form action="{{ route('generos.deletar', $genero->getId()) }}" method="POST" style="display:inline;">
+          @csrf
+          @method('DELETE') <!-- Define o método DELETE -->
+          <button type="submit" class="waves-effect waves-light btn red">
+            <i class="tiny material-icons">delete</i>
+          </button>
+        </form>
       </td>
     </tr>
     @endforeach
