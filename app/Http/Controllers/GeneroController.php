@@ -21,7 +21,7 @@ class GeneroController extends Controller
      */
     public function create()
     {
-        //
+        return view('generos/create');
     }
 
     /**
@@ -29,7 +29,9 @@ class GeneroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Genero::create(['nome'=>$request->input('genero_nome')]);
+
+        return redirect()->route('generos.index');
     }
 
     /**
