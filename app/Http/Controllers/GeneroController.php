@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genero;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class GeneroController extends Controller
@@ -78,5 +79,41 @@ class GeneroController extends Controller
 
         $genero->delete();
         return redirect()->route('generos.index');
+    }
+
+
+    //JSON API
+
+    public function getAll(): JsonResponse
+    {
+        $generos = Genero::all();
+        if ($generos->isEmpty()) {
+            return response()->json(['message' => 'Nenhum Genero Encontrado'], 404);
+        }
+        return response()->json($generos);
+    }
+
+    public function getOne($id): JsonResponse
+    {
+        $genero = Genero::find($id);
+        if (!$genero) {
+            return response()->json(["message" => "Nenhum genero com o id: {$id} foi encontrada"], 404);
+        }
+        return response()->json($genero);
+    }
+
+    public function updateOne(Request $request, $id): JsonResponse
+    {
+        dd($request);
+        $genero = Genero::find($id);
+        if (!$genero) {
+            return response()->json(["message" => "Nenhum genero com o id: {$id} foi encontrada"], 404);
+        } else {
+            $genero->nome = $request->has('nome') ? $request->input('nome') : $genero->nome;
+
+            $genero->save();
+
+            return response()->json(["message" => "genero com o id: {$id} foi atualiado"], 200);
+        }
     }
 }
