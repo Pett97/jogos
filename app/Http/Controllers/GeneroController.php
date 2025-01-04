@@ -82,7 +82,7 @@ class GeneroController extends Controller
     }
 
 
-    //JSON API
+    //JSON API ###########################################################
 
     public function getAll(): JsonResponse
     {
@@ -97,23 +97,40 @@ class GeneroController extends Controller
     {
         $genero = Genero::find($id);
         if (!$genero) {
-            return response()->json(["message" => "Nenhum genero com o id: {$id} foi encontrada"], 404);
+            return response()->json(["message" => "Nenhum genero com o id: {$id} foi encontrado"], 404);
         }
         return response()->json($genero);
     }
 
     public function updateOne(Request $request, $id): JsonResponse
     {
-        dd($request);
+        $genero = Genero::findOrFail($id);
+
+        $genero->update(['nome' => $request->input('nome', $genero->nome),]);
+
+        return response()->json(["message" => "Gênero com id {$id} foi atualizado"], 200);
+    }
+
+    public function deleteOne($id): JsonResponse
+    {
         $genero = Genero::find($id);
         if (!$genero) {
-            return response()->json(["message" => "Nenhum genero com o id: {$id} foi encontrada"], 404);
+            return response()->json(["message" => "Nenhum genero com o id: {$id} foi encontrado"], 404);
         } else {
-            $genero->nome = $request->has('nome') ? $request->input('nome') : $genero->nome;
-
-            $genero->save();
-
-            return response()->json(["message" => "genero com o id: {$id} foi atualiado"], 200);
+            $genero->delete();
+            return response()->json(["message" => "genero com o id: {$id} foi removido"], 200);
         }
+    }
+
+    public function createOne(Request $request): JsonResponse
+    {
+
+        $validated = $request->validate([
+            'nome' => 'required|string|max:255',
+        ]);
+
+        Genero::create(['nome' => $validated['nome']]);
+
+        return response()->json(["message" => "Gênero foi criado com sucesso"], 201);
     }
 }
