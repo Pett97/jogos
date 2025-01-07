@@ -14,9 +14,9 @@ class GeneroSeeder extends Seeder
     public function run(): void
     {
         Genero::insert([
-            ['nome'=>"TESTE"],
-            ['nome'=>"FPS"],
-            ['nome'=>"PUZZLES"],
+            ['nome'=>"VISUAL NOVEL"],
+            ['nome'=>"ACTION RPG"],
+            ['nome'=>"MOBA"],
 
         ]);
     }

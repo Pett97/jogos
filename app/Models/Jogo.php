@@ -26,6 +26,10 @@ class Jogo extends Model
         }
     }
 
+    public function getGenero(){
+        return $this->belongsTo(Genero::class,'id_genero');
+    }
+
     public function getId()
     {
         return $this->id;
@@ -39,7 +43,7 @@ class Jogo extends Model
     public function setNome($novoNome)
     {
         if ($novoNome) {
-            $this->name = strtoupper($novoNome);
+            $this->nome = strtoupper($novoNome);
         }
     }
 

@@ -15,8 +15,8 @@ class JogoSeeder extends Seeder
     {
         Jogo::insert([
             ['nome' => 'DOKI DOKI ', 'id_genero' => 1],
-            ['nome' => 'GOF OF WAR ', 'id_genero' => 1],
-            ['nome' => 'DOTA 2  ', 'id_genero' => 1],
+            ['nome' => 'GOF OF WAR ', 'id_genero' => 2],
+            ['nome' => 'DOTA 2  ', 'id_genero' => 3],
         ]);
     }
 }
