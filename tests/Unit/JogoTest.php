@@ -58,17 +58,6 @@ class JogoTest extends TestCase
         $this->assertEquals(2, $this->jogo->getIdGenero());
     }
 
-    //teste banco
-
-    public function test_banco_devo_ter_jogo_salvo()
-    {
-        $generoRpg = Genero::create(['nome' => "RPG"]);
-
-        $jogo = Jogo::create(['nome' => 'Diablo2', 'id_genero' => $generoRpg->getId()]);
-        
-        $this->assertDatabaseHas('jogos', ['nome' => $jogo->getNome()]);
-    }
-
     public function test_devo_obter_o_nome_genero()
     {
         $generoRpg = Genero::create(['nome' => "RPG"]);
@@ -78,5 +67,56 @@ class JogoTest extends TestCase
         $this->jogo->save();
 
         $this->assertEquals('RPG', $this->jogo->getGenero->getNome());
+    }
+
+    //teste banco
+
+    public function test_banco_devo_ter_jogo_salvo()
+    {
+        $generoRpg = Genero::create(['nome' => "RPG"]);
+
+        $jogo = Jogo::create(['nome' => 'Diablo2', 'id_genero' => $generoRpg->getId()]);
+
+        $this->assertDatabaseHas('jogos', ['nome' => $jogo->getNome()]);
+    }
+
+    public function test_devo_conseguir_alterar_o_nome_do_genero_no_banco()
+    {
+        $generoRpg = Genero::create(['nome' => "RPG"]);
+
+        $jogoShandowFlare = Jogo::create(['nome' => 'ShandowFlare', 'id_genero' => $generoRpg->getId()]);
+
+        $this->assertDatabaseHas('jogos', ['nome' => $jogoShandowFlare->getNome()]);
+
+        $jogoShandowFlare->update(['nome' => "ShandowFlare2"]);
+
+        $this->assertDatabaseHas('jogos', ['nome' => 'ShandowFlare2']);
+
+        $this->assertDatabaseMissing('jogos', ['nome' => 'ShandowFlare']);
+    }
+
+    public function test_devo_conseguir_deletar_o_jogo_do_banco(): void
+    {
+        $generoRpg = Genero::create(['nome' => "RPG"]);
+
+        $jogoShandowFlare = Jogo::create(['nome' => 'ShandowFlare', 'id_genero' => $generoRpg->getId()]);
+
+        $this->assertDatabaseHas('jogos', ['nome' => $jogoShandowFlare->getNome()]);
+
+        $jogoShandowFlare->delete();
+
+        $this->assertDatabaseMissing('jogos', ['nome' => 'ShandowFlare']);
+    }
+
+    public function test_devo_conseguir_alterar_o_id_banco():void
+    {
+        $generoTeste = Genero::create(['nome' => "TESTE"]);
+        $generoAtualizar = Genero::create(['nome' => "TESTE"]);
+
+        $jogoShandowFlare = Jogo::create(['nome' => 'ShandowFlare', 'id_genero' => $generoTeste->getId()]);
+
+        $jogoShandowFlare->update(['id_genero'=>$generoAtualizar->id]);        
+
+        $this->assertDatabaseHas('jogos',['nome'=>$jogoShandowFlare->nome,'id_genero'=>$generoAtualizar->id]);
     }
 }

@@ -50,7 +50,9 @@ class GeneroTest extends TestCase
         $this->assertDatabaseHas('generos',['nome'=>'GeneroAtualizarNome']);
 
         $this->novoGenero->update(['nome'=>'NomeAtualizado']);
+
         $this->assertDatabaseHas('generos',['nome'=>'NomeAtualizado']);
+        
         $this->assertDatabaseMissing('generos', ['nome' => 'GeneroAtualizarNome']);
     }
 
