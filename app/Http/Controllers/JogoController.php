@@ -111,4 +111,34 @@ class JogoController extends Controller
 
         return response()->json(['message' => "jogo atualizado com sucesso"], 200);
     }
+
+    public function deleteOne($id): JsonResponse
+    {
+        $jogo = Jogo::find($id);
+        if (!$jogo) {
+            return response()->json(['message' => "Nenhum Jogo com o $id foi encontrado"], 404);
+        }
+        $jogo->delete();
+        return response()->json(["message" => "Jogo com id $id deletado com sucesso"], 202);
+    }
+
+    public function createOne(Request $request)
+    {
+        if (!$request->input('nome') || !$request->input('id_genero')) {
+            return response(["message" => "os campos: nome e id_genero, são obrigatorios"], 400);
+        };
+
+        $genero = Genero::find($request->input('id_genero'));
+
+        if (!$genero) {
+            return response(["message" => "Id Genero informado nao existe"], 400);
+        }
+
+        Jogo::create([
+            "nome" => $request->input('nome'),
+            "id_genero" => $request->input('id_genero')
+        ]);
+
+        return response(['message' => 'Jogo Criado com sucesso'], 202);
+    }
 }
