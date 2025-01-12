@@ -4,8 +4,6 @@ namespace Tests\Feature\Controller;
 
 use App\Models\Genero;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Http\JsonResponse;
 use Tests\TestCase;
 
 class GeneroControllerTest extends TestCase

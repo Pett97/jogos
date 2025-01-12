@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Genero;
 use App\Models\Jogo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,8 +21,11 @@ class JogoFactory extends Factory
     protected $model = Jogo::class;
     public function definition(): array
     {
+
+        $genero = Genero::factory()->create(['nome' => "GeneroJogo"]);
         return [
-            'nome' => $this->faker->word
+            'nome' => $this->faker->word(),
+            'id_genero' => $genero->id
         ];
     }
 }
