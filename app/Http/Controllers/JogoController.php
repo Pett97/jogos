@@ -16,7 +16,8 @@ class JogoController extends Controller
      */
     public function index()
     {
-        //
+        $jogos = Jogo::all();
+        return view('jogos/index',compact('jogos'));
     }
 
     /**

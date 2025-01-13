@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Cache\Events\RetrievingKey;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,6 +29,12 @@ class Jogo extends Model
 
     public function getGenero(){
         return $this->belongsTo(Genero::class,'id_genero');
+    }
+
+    public function getNomeGenero(){
+        $genero = $this->getGenero;
+
+        return $genero->nome;
     }
 
     public function getId()
