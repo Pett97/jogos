@@ -28,7 +28,7 @@
       </div>
       <div class="center-align">
         <button class="waves-effect waves-light btn teal darken-1" type="submit">Salvar</button>
-        <a href="{{route('generos.index')}}" class="waves-effect waves-light btn yellow darken-4" type="submit">Voltar</a>
+        <a href="{{route('jogos.index')}}" class="waves-effect waves-light btn yellow darken-4" type="submit">Voltar</a>
       </div>
     </form>
   </div>
