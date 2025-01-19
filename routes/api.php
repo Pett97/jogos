@@ -30,3 +30,5 @@ Route::group([
     Route::post('create', [JogoController::class,  'createOne']);
     Route::delete('delete/{id}', [JogoController::class, 'deleteOne']);
 });
+
+

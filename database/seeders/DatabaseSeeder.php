@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             GeneroSeeder::class,
             JogoSeeder::class,
+            UserSeed::class
         ]);
     }
 }

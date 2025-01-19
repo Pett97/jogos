@@ -13,9 +13,16 @@ class GeneroController extends Controller
      */
     public function index()
     {
+
+        if (!auth()) {
+            return redirect()->route('login')->with('teste erro', 'Você precisa estar logado!');
+        }
+
+        // Se autenticado, exibe os gêneros
         $generos = Genero::all();
         return view('generos/index', compact('generos'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
