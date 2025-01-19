@@ -15,8 +15,6 @@ class GeneroTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->artisan('migrate');
         $this->novoGenero = Genero::factory()->make(['nome' => 'GeneroTeste']);
     }
 

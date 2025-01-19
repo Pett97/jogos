@@ -15,7 +15,7 @@ Route::group([
 ], function () {
 
     // MONOLITO
-    Route::get('lista', [GeneroController::class, 'index'])->name('index')->withoutMiddleware('auth');
+    Route::get('lista', [GeneroController::class, 'index'])->name('index');
     Route::get('{genero}/edit', [GeneroController::class, 'edit'])->name('edit');
     Route::put('{genero}', [GeneroController::class, 'update'])->name('update');
     Route::get('criar', [GeneroController::class, 'create'])->name('create');
@@ -29,7 +29,7 @@ Route::group([
     'as' => 'jogos.',
     'middleware' => ['auth'],
 ], function () {
-    Route::get('lista',[JogoController::class,'index'])->name('index')->withoutMiddleware('auth');
+    Route::get('lista',[JogoController::class,'index'])->name('index');
     Route::get('{jogo}/edit', [JogoController::class, 'edit'])->name('edit');
     Route::put('{jogo}', [JogoController::class, 'update'])->name('update');
     Route::get('criar', [JogoController::class, 'create'])->name('create');

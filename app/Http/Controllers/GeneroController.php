@@ -17,8 +17,6 @@ class GeneroController extends Controller
         if (!auth()) {
             return redirect()->route('login')->with('teste erro', 'Você precisa estar logado!');
         }
-
-        // Se autenticado, exibe os gêneros
         $generos = Genero::all();
         return view('generos/index', compact('generos'));
     }
@@ -29,6 +27,9 @@ class GeneroController extends Controller
      */
     public function create()
     {
+        if(!auth()){
+            return redirect()->route('login')->with('teste erro', 'Você precisa estar logado!');
+        }
         return view('generos/create');
     }
 
@@ -56,7 +57,10 @@ class GeneroController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit($id)
-    {
+    {   
+        if(!auth()){
+            return redirect()->route('login')->with('teste erro', 'Você precisa estar logado!');
+        }
         $genero = Genero::findOrFail($id);
         return view('generos/edit', compact('genero'));
     }
