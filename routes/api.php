@@ -3,10 +3,6 @@
 use App\Http\Controllers\GeneroController;
 use App\Http\Controllers\JogoController;
 use App\Http\Controllers\Login\LoginController;
-use App\Models\User;
-use Illuminate\Container\Attributes\Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/user', function (Request $request) {
@@ -24,7 +20,7 @@ Route::group([
 
 Route::group([
     'prefix' => 'generos',
-    'as' => 'generos.'
+    'as' => 'generos.',
 ], function () {
     Route::get('list', [GeneroController::class, 'getAll']);
     Route::get('get/{id}', [GeneroController::class, 'getOne']);

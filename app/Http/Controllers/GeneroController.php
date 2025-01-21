@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Genero;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class GeneroController extends Controller
+class GeneroController extends Controller implements HasMiddleware
 {
+
+    public static function middleware()
+    {
+        return[
+            new Middleware('auth:sanctum',except:[])
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -97,6 +106,9 @@ class GeneroController extends Controller
 
     public function getAll(): JsonResponse
     {
+        if(!auth()){
+            return response()->json(['message' => 'usuario nao autenticado'], 401);
+        }
         $generos = Genero::all();
         if ($generos->isEmpty()) {
             return response()->json(['message' => 'Nenhum Genero Encontrado'], 404);
