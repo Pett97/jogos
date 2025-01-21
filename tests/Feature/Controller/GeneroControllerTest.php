@@ -48,7 +48,18 @@ class GeneroControllerTest extends TestCase
         $response->assertStatus(302);
 
         $response->assertRedirect(route('login'));
-        
+
+        $response = $this->put("generos/{$genero->id}", ['nome' => 'novoNome']);
+
+        $response->assertStatus(302);
+
+        $response->assertRedirect(route('login'));
+
+        $response = $this->delete("generos/{$genero}");
+
+        $response->assertStatus(302);
+    
+        $response->assertRedirect(route('login'));
     }
 
     public function test_devo_conseguir_listar_todos_os_generos()
