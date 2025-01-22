@@ -28,7 +28,6 @@ class LoginController extends Controller
         ]);
 
         if (FacadesAuth::attempt(['email' => $request->login_email, 'password' => $request->login_password])) {
-
             return redirect()->intended('/generos/lista');
         }
         return redirect()->route('home');

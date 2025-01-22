@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\GeneroController;
+use App\Http\Controllers\Generos\GeneroController;
 use App\Http\Controllers\JogoController;
 use App\Http\Controllers\Login\LoginController;
 use Illuminate\Support\Facades\Route;
+
+//login web
 Route::get('/',[LoginController::class,'getLogin'])->name('home');
 Route::post('/',[LoginController::class,'login'])->name('login');
 
@@ -15,7 +17,7 @@ Route::group([
 ], function () {
 
     // MONOLITO
-    Route::get('lista', [GeneroController::class, 'index'])->name('index');
+    Route::get('lista', [GeneroController::class, 'index'])->name('generos');
     Route::get('{genero}/edit', [GeneroController::class, 'edit'])->name('edit');
     Route::put('{genero}', [GeneroController::class, 'update'])->name('update');
     Route::get('criar', [GeneroController::class, 'create'])->name('create');

@@ -15,7 +15,7 @@
             <div class="nav-wrapper teal darken-1">
                 <a href="#" class="brand-logo center">Api Jogos</a>
                 <div class="right">
-                    <a class="waves-effect waves-light btn lime darken-1" href="{{route('generos.index')}}">Generos</a>
+                    <a class="waves-effect waves-light btn lime darken-1" href="{{route('generos.generos')}}">Generos</a>
                     <a class="waves-effect waves-light btn lime darken-1" href="{{route('jogos.index')}}">Jogos</a>
                 </div>
             </div>
