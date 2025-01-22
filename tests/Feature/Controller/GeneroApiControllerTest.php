@@ -61,6 +61,32 @@ class GeneroApiControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_nao_devo_conseguir_atualizar_um_genero_passando_parametro_errado_json(): void
+    {
+        $genero = Genero::first();
+
+        $dadosAtualizados = [
+            'dadoErrado' => 'Novo Nome Atualizado'
+        ];
+
+        $response = $this->actingAs($this->usuarioTeste)->putJson('api/generos/update/' . $genero->id, $dadosAtualizados);
+
+        $response->assertStatus(422);
+    }
+
+    public function test_na_devo_conseguir_atualizar_um_genero_que_nao_existe(): void
+    {
+        $id= -1;
+
+        $dadosAtualizados = [
+            'nome' => 'Novo Nome Atualizado'
+        ];
+
+        $response = $this->actingAs($this->usuarioTeste)->putJson('api/generos/update/' . $id, $dadosAtualizados);
+
+        $response->assertStatus(404);
+    }
+
     public function test_devo_conseguir_deletar_um_genero(): void
     {
         $genero  = Genero::first();
