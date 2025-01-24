@@ -3,11 +3,12 @@
 use App\Http\Controllers\Generos\GeneroController;
 use App\Http\Controllers\JogoController;
 use App\Http\Controllers\Login\LoginController;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 //login web
 Route::get('/',[LoginController::class,'getLogin'])->name('home');
-Route::post('/',[LoginController::class,'login'])->name('login');
+Route::post('/',[LoginController::class,'login'])->name('login')->withoutMiddleware([VerifyCsrfToken::class]);;
 
 //genero
 Route::group([
