@@ -12,6 +12,7 @@ class LoginControllerTest extends TestCase
 {
     use RefreshDatabase;
     private $ususarioTeste;
+    private $usuarioApiTeste;
     protected function setUp(): void
     {
         parent::setUp();
@@ -19,6 +20,11 @@ class LoginControllerTest extends TestCase
             'password' => Hash::make('123456'),
         ]);
 
+        $this->usuarioApiTeste = User::create([
+            'name' => 'usuarioAPITESTE',
+            'email' => 'usuario138@teste.com',
+            'password' => Hash::make('123456')
+        ]);
         Genero::factory(3)->create();
     }
 
@@ -30,6 +36,69 @@ class LoginControllerTest extends TestCase
             'email' => $usuario->email,
         ]);
     }
+
+    //API
+    public function test_api_devo_conseguir_cadastrar_um_novo_usuario(): void
+    {
+        $response = $this->post('api/user/create', [
+            'name' => 'usuarioAPI',
+            'email' => 'usuario@teste.com',
+            'password' => '123456',
+            'password_confirmation' => '123456'
+        ]);
+        $response->assertStatus(200);
+    }
+
+    public function test_api_nao_devo_conseguir_cadastrar_um_novo_usuario_com_parametro_errado(): void
+    {
+        $response = $this->post('api/user/create', [
+            'name' => 'usuarioAPI',
+        ]);
+        $response->assertStatus(302);
+    }
+
+    public function test_api_devo_conseguir_logar(): void
+    {
+        $response = $this->post('api/user/login', [
+            'email' => $this->usuarioApiTeste->email,
+            'password' => '123456'
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'token',
+        ]);
+    }
+
+    public function test_api__nao_devo_conseguir_logar_com_parametro_errado(): void
+    {
+        $response = $this->post('api/user/login', [
+            'email' => $this->usuarioApiTeste->email,
+        ]);
+
+        $response->assertStatus(302);
+    }
+
+    public function test_api_devo_conseguir_fazer_logout(): void
+    {
+        $token = $this->usuarioApiTeste->createToken('Test Token')->plainTextToken;
+
+        $response = $this->withHeaders([
+            'Authorization' => "Bearer $token",
+        ])->post('api/user/logout');
+        
+        $response->assertStatus(201);
+
+        $response->assertJson([
+            'message' => 'Logout Realizado com sucesso',
+        ]);
+
+        $this->assertDatabaseMissing('personal_access_tokens', [
+            'tokenable_id' => $this->usuarioApiTeste->id,
+        ]);
+    }
+
+    //WEB
 
     public function test_devo_conseguir_fazer_login_usuario_com_sessao(): void
     {
