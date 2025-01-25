@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Generos\GeneroController;
-use App\Http\Controllers\JogoController;
+use App\Http\Controllers\Jogos\JogoController;
 use App\Http\Controllers\Login\LoginController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;

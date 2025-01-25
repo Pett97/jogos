@@ -1,67 +1,62 @@
 <?php
 
-namespace Tests\Feature\Feature;
+namespace Tests\Feature;
+
 use App\Models\Jogo;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class JogoControllerTest extends TestCase
 {
-    private $generoTesteJogo;
-    private $jogo;
+    private $usuarioTestJogo2;
     use RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
         Jogo::factory(2)->create();
+        $this->usuarioTestJogo2 = User::factory()->create();
     }
 
-
-    public function test_devo_conseguir_listar_todos_os_jogos()
+    public function test_nao_posso_acesar_sem_logar()
     {
-        $response = $this->getJson('/api/jogos/list');
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            '*' => ['id', 'nome', 'id_genero']
-        ]);
-    }
 
-
-    public function test_devo_conseguir_buscar_um_jogo()
-    {
         $jogo = Jogo::first();
-        $response = $this->getJson('api/jogos/get/' . $jogo->id);
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'id',
-            'nome',
-            'id_genero'
-        ]);
+        $response = $this->get("jogos/lista");
+
+        $response->assertStatus(302);
+
+        $response->assertRedirect(route('login'));
+
+        $response = $this->get("jogos/criar");
+
+        $response->assertStatus(302);
+
+        $response->assertRedirect(route('login'));
+
+        $response = $this->get("jogos/{$jogo->id}/edit");
+
+        $response->assertStatus(302);
+
+        $response->assertRedirect(route('login'));
     }
 
-    public function test_devo_conseguir_atualizar_um_jogo(): void
+    public function test_posso_acesar_logado()
     {
+
         $jogo = Jogo::first();
-        $dadosAtualizados = [
-            'nome' => 'Novo Nome Atualizado'
-        ];
-        $response = $this->putJson('api/jogos/update/' . $jogo->id, $dadosAtualizados);
+        $response = $this->actingAs($this->usuarioTestJogo2)->get("jogos/lista");
+
         $response->assertStatus(200);
-    }
 
-    public function test_devo_conseguir_deletar_um_jogo(): void
-    {
-        $jogo  = Jogo::first();
-        $response = $this->deleteJson('api/jogos/delete/' . $jogo->id);
-        $response->assertStatus(202);
-    }
+        $response = $this->actingAs($this->usuarioTestJogo2)->get("jogos/criar");
 
+        $response->assertStatus(200);
 
-    public function test_nao_devo_conseguir_listar_um_jogo_nao_cadastrado(): void
-    {
-        $id = '99';
-        $response = $this->getJson('api/jogos/get/' . $id);
-        $response->assertStatus(404);
+        $response = $this->actingAs($this->usuarioTestJogo2)->get("jogos/{$jogo->id}/edit");
+
+        $response->assertStatus(200);
     }
 }

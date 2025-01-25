@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Generos\GeneroApiController;
-use App\Http\Controllers\JogoController;
+use App\Http\Controllers\Jogos\JogoApiController;
 use App\Http\Controllers\Login\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,9 +30,9 @@ Route::group([
     'prefix' => 'jogos',
     'as' => 'jogos.'
 ], function () {
-    Route::get('list', [JogoController::class, 'getAll']);
-    Route::get('get/{id}', [JogoController::class, 'getOne']);
-    Route::put('update/{id}', [JogoController::class, 'updateOne']);
-    Route::post('create', [JogoController::class,  'createOne']);
-    Route::delete('delete/{id}', [JogoController::class, 'deleteOne']);
+    Route::get('list', [JogoApiController::class, 'getAll']);
+    Route::get('get/{id}', [JogoApiController::class, 'getOne']);
+    Route::put('update/{id}', [JogoApiController::class, 'updateOne']);
+    Route::post('create', [JogoApiController::class,  'createOne']);
+    Route::delete('delete/{id}', [JogoApiController::class, 'deleteOne']);
 });
