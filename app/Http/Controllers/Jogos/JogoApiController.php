@@ -1,14 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Jogos;
 
+use App\Http\Controllers\Controller;
 use App\Models\Genero;
 use App\Models\Jogo;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class JogoController extends Controller
-{
+class JogoApiController extends Controller implements HasMiddleware
+{   
+
+    public static function middleware()
+    {
+        return[
+            new Middleware('auth:sanctum',except:[])
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

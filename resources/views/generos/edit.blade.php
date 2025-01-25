@@ -18,7 +18,7 @@
       </div>
       <div class="center-align">
         <button class="waves-effect waves-light btn teal darken-1" type="submit">Salvar</button>
-        <a href="<?= route('generos.index') ?>" class="waves-effect waves-light btn yellow darken-4">Voltar</a>
+        <a href="<?= route('generos.generos') ?>" class="waves-effect waves-light btn yellow darken-4">Voltar</a>
       </div>
     </form>
 
